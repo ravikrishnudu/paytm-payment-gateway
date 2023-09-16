@@ -9,8 +9,8 @@ const { v4: uuidv4 } = require("uuid");
 const PaytmChecksum = require("./PaytmChecksum");
 
 const router = express.Router();
-router.post("/", (req, res) => {
-  const { amount, email } = req.body;
+router.post("/payment", (req, res) => {
+  const { amount, email, phone } = req.body;
   const totalAmount = JSON.stringify(amount);
   let params = {};
 
@@ -23,7 +23,7 @@ router.post("/", (req, res) => {
     (params["TXN_AMOUNT"] = totalAmount),
     (params["CALLBACK_URL"] = "http://localhost:5000/api/callback"),
     (params["EMAIL"] = email),
-    (params["MOBILE_NO"] = "9876543210");
+    (params["MOBILE_NO"] = phone);
   /**
    * Generate checksum by parameters we have
    * Find your Merchant Key in your Paytm Dashboard at https://dashboard.paytm.com/next/apikeys
